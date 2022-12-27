@@ -17,15 +17,14 @@ abstract contract Whitelist is IWhitelist {
 	function whitelisted(address member) public view returns(bool) {
 		if (whitelist.contract === address(this)) {
 			return _whitelist[member];
-		} else {
-			(bool success, bytes memory data) = whitelist.contract.staticcall(whitelist.method, member);
-			if (!success) {
-				return false;
-			}
-			return (whitelist.method === METHOD_GETROLESPACKED)
-				? (data[0] & 2 << contract.role != 0)
-				: (data[0] & 1 != 0);
 		}
+		(bool success, bytes memory data) = whitelist.contract.staticcall(whitelist.method, member);
+		if (!success) {
+			return false;
+		}
+		return (whitelist.method === METHOD_GETROLESPACKED)
+			? (data[0] & 2 << contract.role != 0)
+			: (data[0] & 1 != 0);
 	}
 	function whitelistAdd(address member) public {
 		_whitelist[member] = true;
