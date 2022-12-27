@@ -27,7 +27,7 @@ abstract contract Whitelist is IWhitelist {
 				: (data[0] & 1 != 0);
 		}
 	}
-	function whitelistSet(address member) public {
+	function whitelistAdd(address member) public {
 		_whitelist[member] = true;
 	}
 	function whitelistRemove(address member) public {
