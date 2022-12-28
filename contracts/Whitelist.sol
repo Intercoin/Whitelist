@@ -28,11 +28,6 @@ abstract contract Whitelist is IWhitelist {
 		uint256 roles = abi.decode(data, (uint256));
 		return (roles & (1 << whitelist.role)) != 0;
 	}
-    function whitelisted2(address member) public view returns(uint256) {
-		(bool success, bytes memory data) = whitelist.contractAddress.staticcall(abi.encodeWithSelector(whitelist.method, member));
-		uint256 roles = abi.decode(data, (uint256));
-		return roles;
-	}
 	function whitelistAdd(address member) public {
 		_whitelist[member] = true;
 	}
