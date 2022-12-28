@@ -16,7 +16,7 @@ abstract contract Whitelist is IWhitelist {
 	mapping (address => bool) _whitelist;
 	function whitelisted(address member) public view returns(bool) {
 		if (whitelist.contractAddress == address(0)) {
-			return _whitelist[member];
+			return true;
 		}
 		(bool success, bytes memory data) = whitelist.contractAddress.staticcall(abi.encodeWithSelector(whitelist.method, member));
 		if (!success) {
@@ -27,11 +27,5 @@ abstract contract Whitelist is IWhitelist {
 		}
 		uint256 roles = abi.decode(data, (uint256));
 		return (roles & (1 << whitelist.role)) != 0;
-	}
-	function whitelistAdd(address member) public {
-		_whitelist[member] = true;
-	}
-	function whitelistRemove(address member) public {
-		delete _whitelist[member]; // refund gas
 	}
 }
