@@ -29,6 +29,6 @@ abstract contract Whitelist is IWhitelist {
 			return false;
 		}
 		uint256 roles = abi.decode(data, (uint256));
-		return (roles & (1 << (whitelist.role - 1))) != 0;
+		return (roles & (2 ** whitelist.role)) != 0;
 	}
 }
