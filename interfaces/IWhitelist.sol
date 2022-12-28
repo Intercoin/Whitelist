@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.11;
+pragma solidity 0.8.10;
 
-interface ISafeHook {
-    function whitelisted(address member) public view returns(bool);
+interface IWhitelist {
+    function whitelisted(address member) external view returns(bool);
 }
