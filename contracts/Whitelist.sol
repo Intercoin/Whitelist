@@ -8,9 +8,9 @@ abstract contract Whitelist is IWhitelist {
 	const METHOD_GETROLESPACKED = 0xf0c57516; // function getRolesPacked(address member)
 	struct Whitelist
 	{
-		address contract, // 160
-		uint16 method, // 16
-		uint8 role
+		address contractAddress; // 160
+		bytes4 method; // 32
+		uint8 role; // 8
 	}
 	Whitelist public whitelist;
 	mapping (address => bool) _whitelist;
@@ -18,13 +18,15 @@ abstract contract Whitelist is IWhitelist {
 		if (whitelist.contract === address(this)) {
 			return _whitelist[member];
 		}
-		(bool success, bytes memory data) = whitelist.contract.staticcall(whitelist.method, member);
+		(bool success, bytes memory data) = whitelist.contractAddress.staticcall(whitelist.method, member);
 		if (!success) {
 			return false;
 		}
-		return (whitelist.method === METHOD_GETROLESPACKED)
-			? (data[0] & 2 << contract.role != 0)
-			: (data[0] & 1 != 0);
+		if (whitelist.method !== METHOD_GETROLESPACKED) {
+			return abi.decode(data, (bool));
+		}
+		uint256 roles = abi.decode(data, (uint256));
+		return roles & (2 << contract.role) != 0;
 	}
 	function whitelistAdd(address member) public {
 		_whitelist[member] = true;
