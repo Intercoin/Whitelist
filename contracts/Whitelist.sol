@@ -5,7 +5,7 @@ import "../interfaces/IWhitelist.sol";
 
 abstract contract Whitelist is IWhitelist {
 
-	bytes4 public constant METHOD_GETROLESPACKED = 0xf0c57516; // function getRolesPacked(address member)
+	bytes4 public constant METHOD_HASROLE = 0x95a8c58d; // function hasRole(address member, uint8 role)
 	struct Whitelist
 	{
 		address contractAddress; // 160
@@ -18,17 +18,16 @@ abstract contract Whitelist is IWhitelist {
 		if (whitelist.contractAddress == address(0)) {
 			return true;
 		}
-		(bool success, bytes memory data) = whitelist.contractAddress.staticcall(abi.encodeWithSelector(whitelist.method, member));
+		bool success;
+		bytes memory data;
+		if (whitelist.role == 0) {
+			(success, data) = whitelist.contractAddress.staticcall(abi.encodeWithSelector(whitelist.method, member));
+		} else {
+			(success, data) = whitelist.contractAddress.staticcall(abi.encodeWithSelector(METHOD_HASROLE, member, whitelist.role));
+		}
 		if (!success) {
 			return false;
 		}
-		if (whitelist.method != METHOD_GETROLESPACKED) {
-			return abi.decode(data, (bool));
-		}
-		if (whitelist.role == 0) {
-			return false;
-		}
-		uint256 roles = abi.decode(data, (uint256));
-		return (roles & (2 ** whitelist.role)) != 0;
+		return abi.decode(data, (bool));
 	}
 }
