@@ -6,12 +6,7 @@ import "./interfaces/IWhitelist.sol";
 abstract contract Whitelist is IWhitelist {
 
 	bytes4 public constant METHOD_HASROLE = 0x95a8c58d; // function hasRole(address member, uint8 role)
-	struct WhitelistStruct
-	{
-		address contractAddress; // 160
-		bytes4 method; // 32
-		uint8 role; // 8
-	}
+	
 	WhitelistStruct public whitelist;
 	mapping (address => bool) _whitelist;
 	function whitelisted(address member) public view returns(bool) {

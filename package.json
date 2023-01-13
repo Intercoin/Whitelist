@@ -1,6 +1,6 @@
 {
   "name": "@artman325/whitelist",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Just a helper class to access whitelists across contracts",
   "main": "index.js",
   "files": [
