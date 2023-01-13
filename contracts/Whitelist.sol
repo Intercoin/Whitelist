@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.10;
 
-import "../interfaces/IWhitelist.sol";
+import "./interfaces/IWhitelist.sol";
 
 abstract contract Whitelist is IWhitelist {
 

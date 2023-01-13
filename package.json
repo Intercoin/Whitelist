@@ -1,8 +1,13 @@
 {
   "name": "@artman325/whitelist",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Just a helper class to access whitelists across contracts",
   "main": "index.js",
+  "files": [
+    "/contracts/**/*.sol",
+    "/build/contracts/*.json",
+    "!/contracts/mocks/**/*"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
