@@ -9,16 +9,15 @@ abstract contract Whitelist is IWhitelist {
 	
 	WhitelistStruct public whitelist;
 	mapping (address => bool) _whitelist;
-	bool useWhitelist;
-
+	
 	function whitelisted(address member) public view returns(bool) {
 		// if will not useWhitelist then will always return true
-		if (!useWhitelist) {
+		if (!whitelist.useWhitelist) {
 			return true;
 		}
 
 		// using internal whitelist if whitelist.contractAddress == address(0)
-		if (useWhitelist && whitelist.contractAddress == address(0)) {
+		if (whitelist.useWhitelist && whitelist.contractAddress == address(0)) {
 			return _whitelist[member];
 		}
 
@@ -36,11 +35,11 @@ abstract contract Whitelist is IWhitelist {
 		return abi.decode(data, (bool));
 	}
 
-	function whitelistInit(WhitelistStruct memory _whitelistStruct, bool _useWhitelist) internal {
+	function whitelistInit(WhitelistStruct memory _whitelistStruct) internal {
 		whitelist.contractAddress = _whitelistStruct.contractAddress;
         whitelist.method = _whitelistStruct.method;
         whitelist.role = _whitelistStruct.role;
-        useWhitelist = _useWhitelist;
+        whitelist.useWhitelist = _whitelistStruct.useWhitelist;
 	}
 
 	function _addWhitelist(address account) internal {
