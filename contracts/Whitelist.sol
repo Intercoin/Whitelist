@@ -36,7 +36,7 @@ abstract contract Whitelist is IWhitelist {
 		return abi.decode(data, (bool));
 	}
 
-	function init(WhitelistStruct memory _whitelistStruct, bool _useWhitelist) internal {
+	function whitelistInit(WhitelistStruct memory _whitelistStruct, bool _useWhitelist) internal {
 		whitelist.contractAddress = _whitelistStruct.contractAddress;
         whitelist.method = _whitelistStruct.method;
         whitelist.role = _whitelistStruct.role;
