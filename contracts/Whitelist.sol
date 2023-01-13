@@ -42,11 +42,11 @@ abstract contract Whitelist is IWhitelist {
         whitelist.useWhitelist = _whitelistStruct.useWhitelist;
 	}
 
-	function _addWhitelist(address account) internal {
+	function _whitelistAdd(address account) internal {
 		_whitelist[account] = true;
 	}
 
-	function _removeWhitelist(address account) internal {
+	function _whitelistRemove(address account) internal {
 		delete _whitelist[account];
 	}
 }
