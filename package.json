@@ -1,7 +1,7 @@
 {
-  "name": "Whitelist",
+  "name": "@artman325/whitelist",
   "version": "1.0.0",
-  "description": "",
+  "description": "Just a helper class to access whitelists across contracts",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
